@@ -4,24 +4,10 @@ A minimal, high-end client-side interface for the ElevenLabs Text-to-Speech API.
 
 EL Studio provides a clean, stark, and distraction-free interface for generating, configuring, and downloading high-quality voice synthesis.
 
----
-
-## 🎨 Design Philosophy: Minimalist Monochrome
-
-EL Studio is designed like an editorial tool from a high-end design studio—precise, stark, and functional.
-- **Strict Palette**: Pure white (`#FFFFFF`) and black (`#000000`) with medium gray (`#525252`) for minor details.
-- **Zero Radius**: Flat angles (`0px`) everywhere. No rounded corners, ever.
-- **Zero Shadows**: Absolute flat design.
-- **Typography**: 
-  - Headlines & Section Titles: *Playfair Display*
-  - Body Text & Inputs: *Source Serif 4*
-  - Metadata & Audio parameters: *JetBrains Mono*
-- **Transitions**: 100ms hover states with instant color inversion.
-- **Subtle Texture**: A faint repeating background grid pattern that provides paper-like depth.
 
 ---
 
-## ✨ Features
+## Features
 
 - **Direct API Calls**: All API requests are run directly from your browser. Your key is stored in memory (`useState`) and never saved to local storage or any backend server.
 - **Dynamic Voice List**: Fetches your available voices directly from your ElevenLabs account and sorts them alphabetically.
@@ -34,7 +20,7 @@ EL Studio is designed like an editorial tool from a high-end design studio—pre
 
 ---
 
-## 🔑 API Key Permissions
+##  API Key Permissions
 
 To generate an API key on ElevenLabs for EL Studio, you only need to enable these specific permissions:
 
@@ -48,7 +34,7 @@ To generate an API key on ElevenLabs for EL Studio, you only need to enable thes
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
