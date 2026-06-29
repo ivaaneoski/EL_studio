@@ -32,6 +32,15 @@ To generate an API key on ElevenLabs for EL Studio, you only need to enable thes
 
 *Everything else can stay at **No Access**.*
 
+> [!NOTE]
+> **Optional Feature: Character Usage Tracker**
+> 
+> To enable the visual character balance tracker at the top of the page, you must also grant **Read** or **Access** permission to the **User** or **Subscription** scope on ElevenLabs.
+> 
+> If this permission is omitted (left as "No Access"), the ElevenLabs API returns a `403 Forbidden` error when calling `GET /v1/user/subscription`. To protect the app from crashing, the code handles this failure gracefully by silently hiding the tracker (keeping the subscription state null).
+> 
+> To show the tracker, simply edit your key in your ElevenLabs dashboard, enable the **User** or **Subscription** permission, and click "LOAD VOICES →" again.
+
 ---
 
 ## Getting Started
