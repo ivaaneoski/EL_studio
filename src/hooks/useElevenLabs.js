@@ -2,9 +2,30 @@ import { useState } from 'react';
 
 export function useElevenLabs() {
   const [voices, setVoices] = useState([]);
+  const [subscription, setSubscription] = useState(null);
   const [loadingVoices, setLoadingVoices] = useState(false);
   const [generatingAudio, setGeneratingAudio] = useState(false);
   const [error, setError] = useState(null);
+
+  const fetchSubscription = async (apiKey) => {
+    if (!apiKey) return;
+    try {
+      const response = await fetch("https://api.elevenlabs.io/v1/user/subscription", {
+        headers: {
+          "xi-api-key": apiKey,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setSubscription({
+          character_count: data.character_count,
+          character_limit: data.character_limit,
+        });
+      }
+    } catch (err) {
+      console.error("Failed to fetch subscription balance:", err);
+    }
+  };
 
   const fetchVoices = async (apiKey) => {
     if (!apiKey) return;
@@ -39,6 +60,8 @@ export function useElevenLabs() {
         a.name.localeCompare(b.name)
       );
       setVoices(sortedVoices);
+      // Fetch subscription balance
+      await fetchSubscription(apiKey);
       return sortedVoices;
     } catch (err) {
       let friendly = err.message;
@@ -51,6 +74,7 @@ export function useElevenLabs() {
       }
       setError(friendly);
       setVoices([]);
+      setSubscription(null);
       throw new Error(friendly);
     } finally {
       setLoadingVoices(false);
@@ -128,6 +152,8 @@ export function useElevenLabs() {
       const blob = await response.blob();
       const size = blob.size;
       const urlBlob = URL.createObjectURL(blob);
+      // Update subscription balance
+      await fetchSubscription(apiKey);
       return { url: urlBlob, size };
     } catch (err) {
       let friendly = err.message;
@@ -147,6 +173,7 @@ export function useElevenLabs() {
 
   return {
     voices,
+    subscription,
     loadingVoices,
     generatingAudio,
     error,

@@ -15,6 +15,12 @@ export default {
         body:    ['"Source Serif 4"', 'Georgia', 'serif'],
         mono:    ['"JetBrains Mono"', 'monospace'],
       },
+      colors: {
+        black: 'var(--fg)',
+        white: 'var(--bg)',
+        'border-light': 'var(--border-light)',
+        'muted-fg': 'var(--muted-fg)',
+      },
     },
   },
   plugins: [],

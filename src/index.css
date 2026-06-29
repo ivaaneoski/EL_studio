@@ -5,12 +5,23 @@
 @tailwind utilities;
 
 :root {
-  --bg:           #FFFFFF;
-  --fg:           #000000;
-  --muted:        #F5F5F5;
-  --muted-fg:     #525252;
-  --border:       #000000;
-  --border-light: #E5E5E5;
+  --bg:            #FFFFFF;
+  --fg:            #000000;
+  --muted:         #F5F5F5;
+  --muted-fg:      #525252;
+  --border:        #000000;
+  --border-light:  #E5E5E5;
+  --texture-color: rgba(0, 0, 0, 0.015);
+}
+
+:root.dark {
+  --bg:            #000000;
+  --fg:            #FFFFFF;
+  --muted:         #1A1A1A;
+  --muted-fg:      #A3A3A3;
+  --border:        #FFFFFF;
+  --border-light:  #262626;
+  --texture-color: rgba(255, 255, 255, 0.015);
 }
 
 *, *::before, *::after {
@@ -27,14 +38,21 @@ body {
     0deg,
     transparent,
     transparent 1px,
-    rgba(0, 0, 0, 0.015) 1px,
-    rgba(0, 0, 0, 0.015) 2px
+    var(--texture-color) 1px,
+    var(--texture-color) 2px
   );
   background-size: 100% 4px;
   background-attachment: fixed;
 }
 
-/* Custom slider styles */
+/* Butter smooth transitions for theme changes */
+body, input, select, textarea, button, hr {
+  transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 200ms cubic-bezier(0.4, 0, 0.2, 1), 
+              color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom slider styles with smooth sliding thumb and hover transition */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -53,6 +71,11 @@ input[type="range"]::-webkit-slider-thumb {
   background: var(--fg);
   border-radius: 0;
   cursor: pointer;
+  transition: transform 100ms ease, background-color 200ms ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
 }
 
 input[type="range"]::-moz-range-thumb {
@@ -62,6 +85,11 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 0;
   border: none;
   cursor: pointer;
+  transition: transform 100ms ease, background-color 200ms ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.15);
 }
 
 /* Focus states — border only, no glow */
@@ -75,4 +103,20 @@ textarea:focus {
 button:focus-visible {
   outline: 3px solid var(--fg);
   outline-offset: 3px;
+}
+
+/* Premium buttery-smooth entrance transitions */
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-slide {
+  animation: fadeInSlide 350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

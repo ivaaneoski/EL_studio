@@ -19,7 +19,7 @@ import React from 'react';
             onChange={(e) => onChange(e.target.value)}
             onBlur={handleBlur}
             placeholder="Paste your ElevenLabs API key..."
-            className="flex-1 px-4 py-3 bg-white border-2 border-black font-mono text-sm placeholder:italic placeholder:text-[#525252] transition-[border-width] duration-100"
+            className="flex-1 px-4 py-3 bg-white border-2 border-black font-mono text-sm placeholder:italic placeholder:text-muted-fg transition-[border-width] duration-100"
           />
           <button
             type="button"

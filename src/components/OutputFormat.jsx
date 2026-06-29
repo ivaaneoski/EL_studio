@@ -57,7 +57,7 @@ export default function OutputFormat({
         </div>
       </div>
 
-      <p className="font-mono text-xs text-[#525252] mt-1.5 leading-relaxed">
+      <p className="font-mono text-xs text-muted-fg mt-1.5 leading-relaxed">
         PCM outputs raw uncompressed audio (saved as .wav). μ-law is for telephony systems at 8 kHz.
       </p>
     </div>

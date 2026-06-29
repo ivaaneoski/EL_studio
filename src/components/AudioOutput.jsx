@@ -51,7 +51,7 @@ export default function AudioOutput({ audioData, codec, formatValue }) {
         />
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
-          <span className="font-mono text-xs text-[#525252] tracking-wider">
+          <span className="font-mono text-xs text-muted-fg tracking-wider">
             {metadata}
           </span>
 

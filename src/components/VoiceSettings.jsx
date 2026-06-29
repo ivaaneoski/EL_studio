@@ -69,9 +69,9 @@ export default function VoiceSettings({
           value={languageCode}
           onChange={(e) => onLanguageChange(e.target.value)}
           placeholder="e.g. en"
-          className="w-full px-4 py-3 bg-white border-2 border-black font-body text-sm placeholder:italic placeholder:text-[#525252] transition-[border-width] duration-100"
+          className="w-full px-4 py-3 bg-white border-2 border-black font-body text-sm placeholder:italic placeholder:text-muted-fg transition-[border-width] duration-100"
         />
-        <p className="font-mono text-xs text-[#525252] mt-1.5">
+        <p className="font-mono text-xs text-muted-fg mt-1.5">
           ISO 639-1 language code — e.g. en, fr, de, es, hi
         </p>
       </div>

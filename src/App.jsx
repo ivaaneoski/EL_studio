@@ -9,6 +9,7 @@ import OutputFormat from './components/OutputFormat';
 import GenerateButton from './components/GenerateButton';
 import AudioOutput from './components/AudioOutput';
 import ErrorBox from './components/ErrorBox';
+import SubscriptionTracker from './components/SubscriptionTracker';
 import { useElevenLabs } from './hooks/useElevenLabs';
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
 
   const {
     voices,
+    subscription,
     loadingVoices,
     generatingAudio,
     error,
@@ -98,6 +100,9 @@ export default function App() {
 
   return (
     <main className="max-w-[760px] mx-auto px-6 py-12">
+      {/* Subscription Tracker at the very top */}
+      {subscription && <SubscriptionTracker subscription={subscription} />}
+
       {/* Header */}
       <PageHeader />
       <SectionDivider />
@@ -112,7 +117,7 @@ export default function App() {
         />
 
         {/* 1px light rule */}
-        <hr className="border-t border-[#E5E5E5] my-6" />
+        <hr className="border-t border-border-light my-6" />
 
         {/* Text Input */}
         <TextInput
@@ -167,16 +172,16 @@ export default function App() {
           disabled={loadingVoices}
         />
 
-        {/* Errors Box */}
+        {/* Errors Box with Entry Animation */}
         {error && (
-          <div className="mt-6">
+          <div className="mt-6 animate-fade-in-slide">
             <ErrorBox error={error} />
           </div>
         )}
 
-        {/* Audio Output */}
+        {/* Audio Output with Entry Animation */}
         {audioData && (
-          <div ref={outputRef} className="pt-6">
+          <div ref={outputRef} className="pt-6 animate-fade-in-slide">
             <SectionDivider />
             <AudioOutput
               audioData={audioData}
