@@ -160,7 +160,7 @@ export function useElevenLabs() {
       const urlBlob = URL.createObjectURL(blob);
       await fetchSubscription(apiKey);
 
-      setLastRequestLog({
+      const requestLog = {
         url,
         method: "POST",
         body: reqBody,
@@ -173,9 +173,11 @@ export function useElevenLabs() {
         statusText: response.statusText,
         contentType: response.headers.get("content-type") || acceptHeader,
         sizeBytes: size,
-      });
+      };
 
-      return { url: urlBlob, size };
+      setLastRequestLog(requestLog);
+
+      return { url: urlBlob, size, blob, logData: requestLog };
     } catch (err) {
       let friendly = err.message;
       if (err.message === "401" || err.message.includes("401")) {
