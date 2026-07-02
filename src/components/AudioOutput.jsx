@@ -1,7 +1,9 @@
 import React from 'react';
 import { FORMAT_MAP } from '../constants/formats';
+import WaveformPlayer from './WaveformPlayer';
+import DevConsole from './DevConsole';
 
-export default function AudioOutput({ audioData, codec, formatValue }) {
+export default function AudioOutput({ audioData, codec, formatValue, logData }) {
   if (!audioData) return null;
 
   const { url, size } = audioData;
@@ -44,11 +46,8 @@ export default function AudioOutput({ audioData, codec, formatValue }) {
       </h2>
 
       <div className="space-y-4">
-        <audio
-          controls
-          src={url}
-          className="w-full border-2 border-black focus:outline-none"
-        />
+        {/* Custom Canvas Waveform Player */}
+        <WaveformPlayer audioUrl={url} />
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
           <span className="font-mono text-xs text-muted-fg tracking-wider">
@@ -58,11 +57,18 @@ export default function AudioOutput({ audioData, codec, formatValue }) {
           <button
             type="button"
             onClick={handleDownload}
-            className="px-8 py-4 font-mono text-sm uppercase tracking-widest bg-transparent border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-100 select-none text-center shrink-0"
+            className="px-8 py-4 font-mono text-sm uppercase tracking-widest bg-transparent border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-100 select-none text-center shrink-0 font-bold"
           >
             DOWNLOAD FILE →
           </button>
         </div>
+
+        {/* REST API Telemetry Inspector */}
+        {logData && (
+          <div className="pt-4">
+            <DevConsole logData={logData} />
+          </div>
+        )}
       </div>
     </div>
   );

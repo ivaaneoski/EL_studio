@@ -6,6 +6,7 @@ export function useElevenLabs() {
   const [loadingVoices, setLoadingVoices] = useState(false);
   const [generatingAudio, setGeneratingAudio] = useState(false);
   const [error, setError] = useState(null);
+  const [lastRequestLog, setLastRequestLog] = useState(null);
 
   const fetchSubscription = async (apiKey) => {
     if (!apiKey) return;
@@ -60,7 +61,6 @@ export function useElevenLabs() {
         a.name.localeCompare(b.name)
       );
       setVoices(sortedVoices);
-      // Fetch subscription balance
       await fetchSubscription(apiKey);
       return sortedVoices;
     } catch (err) {
@@ -109,8 +109,23 @@ export function useElevenLabs() {
       acceptHeader = "audio/basic";
     }
 
+    const startTime = performance.now();
+
     try {
       const url = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=${outputFormat}`;
+      const reqBody = {
+        text,
+        model_id: modelId,
+        language_code: languageCode,
+        voice_settings: {
+          stability,
+          similarity_boost: similarityBoost,
+          style,
+          use_speaker_boost: useSpeakerBoost,
+        },
+        output_format: outputFormat,
+      };
+
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -118,19 +133,10 @@ export function useElevenLabs() {
           "Content-Type": "application/json",
           "Accept": acceptHeader,
         },
-        body: JSON.stringify({
-          text,
-          model_id: modelId,
-          language_code: languageCode,
-          voice_settings: {
-            stability,
-            similarity_boost: similarityBoost,
-            style,
-            use_speaker_boost: useSpeakerBoost,
-          },
-          output_format: outputFormat,
-        }),
+        body: JSON.stringify(reqBody),
       });
+
+      const latencyMs = Math.round(performance.now() - startTime);
 
       if (!response.ok) {
         let msg = `${response.status} ${response.statusText}`;
@@ -152,8 +158,23 @@ export function useElevenLabs() {
       const blob = await response.blob();
       const size = blob.size;
       const urlBlob = URL.createObjectURL(blob);
-      // Update subscription balance
       await fetchSubscription(apiKey);
+
+      setLastRequestLog({
+        url,
+        method: "POST",
+        body: reqBody,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": acceptHeader,
+        },
+        latencyMs,
+        status: response.status,
+        statusText: response.statusText,
+        contentType: response.headers.get("content-type") || acceptHeader,
+        sizeBytes: size,
+      });
+
       return { url: urlBlob, size };
     } catch (err) {
       let friendly = err.message;
@@ -177,6 +198,7 @@ export function useElevenLabs() {
     loadingVoices,
     generatingAudio,
     error,
+    lastRequestLog,
     setError,
     fetchVoices,
     generateAudio,

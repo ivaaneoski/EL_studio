@@ -32,6 +32,7 @@ export default function App() {
     loadingVoices,
     generatingAudio,
     error,
+    lastRequestLog,
     setError,
     fetchVoices,
     generateAudio,
@@ -187,6 +188,7 @@ export default function App() {
               audioData={audioData}
               codec={codec}
               formatValue={formatValue}
+              logData={lastRequestLog}
             />
           </div>
         )}
