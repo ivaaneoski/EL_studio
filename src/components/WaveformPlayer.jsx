@@ -292,17 +292,16 @@ export default function WaveformPlayer({ audioUrl }) {
 
       {/* Waveform Canvas */}
       <div className="w-full h-[80px] relative bg-muted/20 border border-border-light cursor-pointer select-none">
-        {!decoded ? (
-          <div className="absolute inset-0 flex items-center justify-center font-mono text-xs text-muted-fg tracking-widest animate-pulse">
+        {!decoded && (
+          <div className="absolute inset-0 flex items-center justify-center font-mono text-xs text-muted-fg tracking-widest animate-pulse bg-white z-10">
             DECODING AUDIO WAVEFORM...
           </div>
-        ) : (
-          <canvas
-            ref={canvasRef}
-            onClick={handleCanvasClick}
-            className="w-full h-full block"
-          />
         )}
+        <canvas
+          ref={canvasRef}
+          onClick={handleCanvasClick}
+          className="w-full h-full block"
+        />
       </div>
 
       {/* Custom Control Row */}
